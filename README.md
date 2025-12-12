@@ -1,85 +1,80 @@
-# 📝 Todo List App - React + Express + MySQL
+Todo List App - React + Express + MongoDB
 
-Aplicación fullstack de gestión de tareas con frontend en React y backend en Express.js con MySQL.
+Aplicación fullstack para la gestión de tareas, con un frontend construido en React y un backend en Express.js utilizando una base de datos MongoDB.
 
----
+Inicio Rápido
+Prerrequisitos
 
-## 🚀 Inicio Rápido
+Node.js 18 o superior
 
-### Prerrequisitos
-- Node.js 18+
-- MySQL 8.0+
+MongoDB (local o Atlas)
 
-### Instalación
+Instalación
 
-**1. Backend:**
-```bash
+1. Backend
+
 cd backend
 npm install
-# Configurar .env con credenciales de MySQL
-mysql -u root -p < database/schema.sql
+# Configurar archivo .env con la cadena de conexión de MongoDB
 npm run dev
-```
 
-**2. Frontend:**
-```bash
-cd frontend
-npm install
-npm run dev
-```
 
----
+2. Frontend
 
-## 📁 Estructura del Proyecto
+  131  cd frontend
+  132  npm run dev
+  133  npm list tailwindcss
+  134  npm run dev
+  135  history
 
-```
-todo-list-app-react/
-├── backend/           # API REST (Express.js + MySQL)
+Estructura del Proyecto
+todo-list-app/
+├── backend/                 # API REST (Express.js + MongoDB)
 │   ├── src/
-│   ├── database/
-│   ├── docs/         # Documentación completa
+│   ├── controllers/
+│   ├── routes/
+│   ├── models/
 │   └── package.json
 │
-└── frontend/         # App React (Vite + Tailwind)
+└── frontend/                # Aplicación React (Vite + Tailwind)
     ├── src/
     └── package.json
-```
 
----
+API Endpoints
+Método	Endpoint	Descripción
+GET	/api/tasks	Obtener todas las tareas
+GET	/api/tasks/:id	Obtener una tarea por ID
+POST	/api/tasks	Crear una nueva tarea
+PUT	/api/tasks/:id	Actualizar una tarea
+PATCH	/api/tasks/:id/toggle	Alternar estado de completada
+DELETE	/api/tasks/:id	Eliminar una tarea
+DELETE	/api/tasks/completed/all	Eliminar todas las completadas
+Despliegue
 
-## 🔌 API Endpoints
+Frontend: Vercel
 
-| Método | Endpoint | Descripción |
-|--------|----------|-------------|
-| GET | `/api/tasks` | Obtener todas las tareas |
-| POST | `/api/tasks` | Crear nueva tarea |
-| PUT | `/api/tasks/:id` | Actualizar tarea |
-| PATCH | `/api/tasks/:id/toggle` | Alternar estado |
-| DELETE | `/api/tasks/:id` | Eliminar tarea |
+Backend: Railway
 
----
+Base de datos: MongoDB Atlas
 
-## 🌐 Despliegue
+Las instrucciones de despliegue pueden incluirse en un archivo dedicado dentro de backend/docs/.
 
-- **Frontend**: Vercel
-- **Backend + MySQL**: Railway
+Documentación Adicional
 
-Ver `backend/docs/DEPLOYMENT-GUIDE.md` para instrucciones completas.
+La carpeta backend/docs/ puede contener documentación extendida, como:
 
----
+Guía de despliegue
 
-## 📚 Documentación Completa
+Referencia completa de la API
 
-Consulta la carpeta `backend/docs/` para:
-- Guía de despliegue detallada
-- Documentación de la API
-- Ejemplos de uso
-- Solución de problemas
+Ejemplos de consumo desde frontend
 
----
+Notas de arquitectura
 
-## 🛠️ Tecnologías
+Resolución de errores comunes
 
-**Frontend**: React 19, Vite 7, Tailwind CSS 4
-**Backend**: Express.js 4, MySQL2, Helmet, CORS
-**Database**: MySQL 8.0+
+Tecnologías Utilizadas
+
+Frontend: React 19, Vite, Tailwind CSS
+Backend: Express.js, Mongoose, Helmet, CORS
+Base de datos: MongoDB
