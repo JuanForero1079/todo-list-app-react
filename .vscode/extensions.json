@@ -1,0 +1,35 @@
+{
+  "recommendations": [
+    // GitHub Copilot - Esenciales
+    "github.copilot",
+    "github.copilot-chat",
+
+    // Desarrollo React
+    "dsznajder.es7-react-js-snippets",
+    "formulahendry.auto-rename-tag",
+
+    // Tailwind CSS
+    "bradlc.vscode-tailwindcss",
+
+    // Prettier y ESLint
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+
+    // Utilidades
+    "christian-kohler.path-intellisense",
+    "visualstudioexptteam.vscodeintellicode",
+    "eamodio.gitlens",
+
+    // JavaScript/JSX
+    "xabikos.javascriptsnippets",
+
+    // Iconos
+    "pkief.material-icon-theme",
+
+    // Git
+    "mhutchie.git-graph",
+
+    // Markdown
+    "yzhang.markdown-all-in-one"
+  ]
+}

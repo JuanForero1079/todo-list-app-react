@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "nixpacks:build": "npm install && npm run build",
+    "nixpacks:start": "npm start"
+  }
+}
