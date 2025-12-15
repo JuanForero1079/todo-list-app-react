@@ -3,13 +3,12 @@ import { toast, ToastContainer } from "react-toastify";
 import TodoItem from "./TodoItem";
 import "react-toastify/dist/ReactToastify.css";
 
-const API_URL = "https://todo-list-app-react-production.up.railway.app/api/tasks";
+const API_URL = "http://localhost:3000/api/tasks";
 
 export default function App() {
   const [tareas, setTareas] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [editingId, setEditingId] = useState(null);
 
   useEffect(() => {
     fetchTareas();
@@ -57,22 +56,24 @@ export default function App() {
     }
   };
 
-  const guardarEdicion = async () => {
-    if (!input.trim() || !editingId) return;
+  const guardarEdicion = async (id, nuevoTexto) => {
+    if (!nuevoTexto.trim()) return;
     setLoading(true);
     try {
-      const response = await fetch(`${API_URL}/${editingId}`, {
-        method: "PATCH",
+      const response = await fetch(`${API_URL}/${id}`, {
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ texto: input }),
+        body: JSON.stringify({ texto: nuevoTexto }),
       });
       if (response.ok) {
         const result = await response.json();
         if (result.success && result.data) {
-          setTareas(tareas.map((t) => (t.id === editingId ? result.data : t)));
+          setTareas(
+            tareas.map((t) => (t.id === id || t._id === id ? result.data : t))
+          );
           toast.success("Tarea editada");
-          setInput("");
-          setEditingId(null);
+        } else {
+          toast.error("No se pudo actualizar la tarea");
         }
       }
     } catch (error) {
@@ -89,7 +90,9 @@ export default function App() {
       if (response.ok) {
         const result = await response.json();
         if (result.success && result.data) {
-          setTareas(tareas.map((t) => (t.id === id ? result.data : t)));
+          setTareas(
+            tareas.map((t) => (t.id === id || t._id === id ? result.data : t))
+          );
           toast.success(result.data.completada ? "Tarea completada" : "Tarea pendiente");
         }
       }
@@ -103,20 +106,12 @@ export default function App() {
     try {
       const response = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
       if (response.ok) {
-        setTareas(tareas.filter((t) => t.id !== id));
+        setTareas(tareas.filter((t) => t.id !== id && t._id !== id));
         toast.success("Tarea eliminada");
       }
     } catch (error) {
       console.error(error);
       toast.error("Error al eliminar la tarea");
-    }
-  };
-
-  const editarTarea = (id) => {
-    const tarea = tareas.find((t) => t.id === id);
-    if (tarea) {
-      setInput(tarea.texto);
-      setEditingId(id);
     }
   };
 
@@ -134,16 +129,14 @@ export default function App() {
           className="flex-1 p-4 rounded-xl shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all text-gray-700 font-medium"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) =>
-            e.key === "Enter" ? (editingId ? guardarEdicion() : agregarTareas()) : null
-          }
+          onKeyDown={(e) => e.key === "Enter" && agregarTareas()}
         />
         <button
-          onClick={editingId ? guardarEdicion : agregarTareas}
+          onClick={agregarTareas}
           disabled={loading}
           className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl shadow-lg transition-all disabled:opacity-50"
         >
-          {loading ? "..." : editingId ? "Guardar" : "Agregar"}
+          {loading ? "..." : "Agregar"}
         </button>
       </div>
 
@@ -155,11 +148,11 @@ export default function App() {
         ) : (
           tareas.map((tarea) => (
             <TodoItem
-              key={tarea.id}
+              key={tarea.id || tarea._id}
               tarea={tarea}
               toggleComplete={toggleComplete}
               eliminarTarea={eliminarTarea}
-              editarTarea={editarTarea}
+              guardarEdicion={guardarEdicion}
             />
           ))
         )}
